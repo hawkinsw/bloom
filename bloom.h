@@ -79,6 +79,15 @@ namespace Bloom {
 				 */
 				for (key_thread_idx = 0; key_thread_idx<K; key_thread_idx++) {
 					key_threads[key_thread_idx].join();
+					if (keys[key_thread_idx] > M) {
+						if (mDebug) {
+							std::cout << "Key too big: "
+							          << keys[key_thread_idx]
+							          << " > "
+							          << M << "." << std::endl;
+						}
+						assert(false);
+					}
 				}
 				assert(key_thread_idx==K);
 			}
