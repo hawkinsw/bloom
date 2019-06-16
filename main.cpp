@@ -10,10 +10,16 @@ class Key {
 };
 
 int main() {
+	bool contains = false;
 	std::array<Bloom::KGF<int>, 3> keys{Key<0>(), Key<1>(), Key<2>()};
 	Bloom::Filter<32,3,int> filter(keys, true);
 
 	filter.insert(5);
-	std::cout << "Contains? " << std::boolalpha << filter.contains(1) << std::endl;
+
+	contains = filter.contains(1);
+	std::cout << "Contains? " << std::boolalpha << contains << std::endl;
+
+	contains = filter.contains(5);
+	std::cout << "Contains? " << std::boolalpha << contains << std::endl;
 	return 0;
 }
