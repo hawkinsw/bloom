@@ -15,7 +15,12 @@ namespace Bloom {
 	class Filter {
 
 		public:
-			Filter(std::array<KGF<Value>, K> kgfs) : mKgfs(kgfs) {};
+			Filter(std::array<KGF<Value>, K> kgfs) :
+				mKgfs(kgfs),
+				mDebug(false) {}
+			Filter(std::array<KGF<Value>, K> kgfs, bool debug) : Filter(kgfs) {
+				mDebug = debug;
+			}
 
 			unsigned int getM() {
 				return M;
@@ -29,7 +34,9 @@ namespace Bloom {
 					unsigned int kf = f(v);
 					mSet.set(kf, true);
 				}
-				std::cout << "bitset: " << mSet << std::endl;
+				if (mDebug) {
+					std::cout << "bitset: " << mSet << std::endl;
+				}
 			}
 
 			bool contains(Value v) {
@@ -44,6 +51,7 @@ namespace Bloom {
 		private:
 		std::array<KGF<Value>, K> mKgfs;
 		std::bitset<M> mSet;
+		bool mDebug;
 	};
 }
 #endif
