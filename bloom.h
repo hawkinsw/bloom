@@ -9,7 +9,7 @@
 
 namespace Bloom {
 	template <class KGF_Value>
-	using KGF = std::function<unsigned int(KGF_Value)>;
+	using KGF = std::function<void(KGF_Value, unsigned int *)>;
 
 	template <unsigned int M, unsigned int K, class Value>
 	class Filter {
@@ -31,7 +31,8 @@ namespace Bloom {
 
 			void insert(Value v) {
 				for (auto f : mKgfs) {
-					unsigned int kf = f(v);
+					unsigned int kf{0};
+					f(v, &kf);
 					mSet.set(kf, true);
 				}
 				if (mDebug) {
@@ -41,7 +42,8 @@ namespace Bloom {
 
 			bool contains(Value v) {
 				for (auto f : mKgfs) {
-					unsigned int kf = f(v);
+					unsigned int kf{0};
+					f(v, &kf);
 					if (mSet[kf] != 1)
 						return false;
 				}
