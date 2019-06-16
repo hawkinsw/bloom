@@ -9,9 +9,19 @@
 #include <cassert>
 
 namespace Bloom {
+	/*
+	 * A key generating function for this Bloom filter
+	 * Its parameters are a value and a pointer to a
+	 * place to store the key it generates.
+	 */
 	template <class KGF_Value>
 	using KGF = std::function<void(KGF_Value, unsigned int *)>;
 
+	/*
+	 * See https://en.wikipedia.org/wiki/Bloom_filter for the
+	 * description of M, and K. Value is the type of the value
+	 * that will be inserted and deleted.
+	 */
 	template <unsigned int M, unsigned int K, class Value>
 	class Filter {
 
@@ -93,4 +103,5 @@ namespace Bloom {
 			}
 	};
 }
+
 #endif
